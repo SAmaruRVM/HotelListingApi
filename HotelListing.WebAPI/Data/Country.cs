@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace HotelListing.WebAPI.Data
 {
@@ -17,7 +16,6 @@ namespace HotelListing.WebAPI.Data
         [StringLength(50)]
         public string ShortName { get; set; }
 
-        [JsonIgnore]
         public ICollection<Hotel> Hotels { get; } = new List<Hotel>();
     }
 }

@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
+using Newtonsoft.Json;
+
 namespace HotelListing.WebAPI
 {
     public class Startup
@@ -23,7 +25,12 @@ namespace HotelListing.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings
+                               .ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    });
 
 
             services.AddCors(cors =>
@@ -46,6 +53,7 @@ namespace HotelListing.WebAPI
             services.AddAutoMapper(typeof(MapperInitializer));
 
             services.AddDbContextPool<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL-SERVER")));
+
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
