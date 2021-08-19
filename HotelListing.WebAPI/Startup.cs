@@ -1,5 +1,11 @@
+using HotelListing.WebAPI.Configurations;
+using HotelListing.WebAPI.Data;
+using HotelListing.WebAPI.IRepository;
+using HotelListing.WebAPI.Repository;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,7 +43,11 @@ namespace HotelListing.WebAPI
                 routingOptions.LowercaseUrls = true;
             });
 
+            services.AddAutoMapper(typeof(MapperInitializer));
 
+            services.AddDbContextPool<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL-SERVER")));
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
             services.AddSwaggerGen(c =>

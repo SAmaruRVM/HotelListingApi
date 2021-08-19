@@ -26,9 +26,9 @@ namespace HotelListing.WebAPI
                 CreateHostBuilder(args).Build()
                                        .Run();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                Log.Fatal("Something went wrong!");
+                Log.Fatal(exception, exception.Message);
             }
             finally
             {
